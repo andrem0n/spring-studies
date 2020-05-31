@@ -31,6 +31,21 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
   @Override
   public Funcionario criar(Funcionario funcionario) {
+    Funcionario chefe = this.funcionarioRepository.findById(funcionario.getChefe().getCodigo())
+        .orElseThrow(IllegalArgumentException::new);
+
+    funcionario.setChefe(chefe);
+
     return this.funcionarioRepository.save(funcionario);
+  }
+
+  @Override
+  public List<Funcionario> obterFuncionariosPorRangeDeIdade(Integer de, Integer ate) {
+    return this.funcionarioRepository.obterFuncionariosPorRangeDeIdade(de, ate);
+  }
+
+  @Override
+  public Funcionario findByNome(String nome) {
+    return this.funcionarioRepository.findByNome(nome);
   }
 }
